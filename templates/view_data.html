@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submitted COVID Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h2>Submitted COVID Data</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Temperature (°F)</th>
+                <th>Oxygen Level (%)</th>
+                <th>Persistent Cough</th>
+                <th>Difficulty Breathing</th>
+                <th>Loss of Taste/Smell</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data_storage %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.temperature }}</td>
+                <td>{{ item.oxygen_level }}</td>
+                <td>{{ item.cough }}</td>
+                <td>{{ item.breathlessness }}</td>
+                <td>{{ item.loss_of_taste_smell }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

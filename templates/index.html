@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>COVID Symptom Checker</title>
+</head>
+<body>
+    <h2>COVID Symptom Checker</h2>
+    <form id="covidForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="temperature">Temperature (°F):</label><br>
+        <input type="number" id="temperature" name="temperature"><br><br>
+        
+        <label for="oxygen_level">Oxygen Level (%):</label><br>
+        <input type="number" id="oxygen_level" name="oxygen_level"><br><br>
+        
+        <label for="cough">Do you have a persistent cough?</label><br>
+        <select id="cough" name="cough">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        <label for="breathlessness">Do you have difficulty breathing?</label><br>
+        <select id="breathlessness" name="breathlessness">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        <label for="loss_of_taste_smell">Have you lost your sense of taste or smell?</label><br>
+        <select id="loss_of_taste_smell" name="loss_of_taste_smell">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <h2>Recommendation</h2>
+    <div id="recommendation"></div>
+
+    <br><br>
+    <a href="/view_data">View Submitted Data</a>
+
+    <script>
+        function submitData() {
+            const data = {
+                name: document.getElementById('name').value,
+                temperature: parseFloat(document.getElementById('temperature').value),
+                oxygen_level: parseInt(document.getElementById('oxygen_level').value),
+                cough: document.getElementById('cough').value,
+                breathlessness: document.getElementById('breathlessness').value,
+                loss_of_taste_smell: document.getElementById('loss_of_taste_smell').value
+            };
+            
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('recommendation').innerText = data.recommendation;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
